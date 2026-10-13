@@ -78,11 +78,11 @@ while True:
         {file_content}
         """
 
-        response = client.chat.completions.create(
+        response = client.response.create(
 
         model=os.getenv("MODEL"),
 
-        messages=[
+        input=[
 
         {
             "role":"system",
@@ -98,7 +98,7 @@ while True:
 
         )
 
-        print(response.choices[0].message.content)
+        print(response.output_text)
         continue
 
     if text.startswith("explain"):
@@ -115,11 +115,11 @@ while True:
         {file_content}
         """
 
-        response = client.chat.completions.create(
+        response = client.response.create(
 
         model=os.getenv("MODEL"),
 
-        messages=[
+        input=[
 
         {
             "role":"system",
@@ -135,7 +135,7 @@ while True:
 
         )
 
-        print(response.choices[0].message.content)
+        print(response.output_text)
         continue
 
    
@@ -160,12 +160,12 @@ while True:
         print("\nAI  : Goodbye! Have a great day.")
         break
 
-    response = client.chat.completions.create(
-        model=os.getenv("MODEL"),
-        messages=messages
-    )
-
-    ai_reply = response.choices[0].message.content
+    response = client.responses.create(
+                   model=os.getenv("MODEL"),
+                   input=messages
+               )
+           
+    ai_reply = response.output_text
 
     print("\nAI :", ai_reply)
 

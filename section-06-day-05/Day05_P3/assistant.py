@@ -78,11 +78,11 @@ while True:
         {file_content}
         """
 
-        response = client.chat.completions.create(
+        response = client.responses.create(
 
         model=os.getenv("MODEL"),
 
-        messages=[
+        input=[
 
         {
             "role":"system",
@@ -98,7 +98,7 @@ while True:
 
         )
 
-        print(response.choices[0].message.content)
+        print(response.output_text)
         continue
 
     if text.startswith("explain"):
@@ -115,11 +115,11 @@ while True:
         {file_content}
         """
 
-        response = client.chat.completions.create(
+        response = client.responses.create(
 
         model=os.getenv("MODEL"),
 
-        messages=[
+        input=[
 
         {
             "role":"system",
@@ -135,7 +135,7 @@ while True:
 
         )
 
-        print(response.choices[0].message.content)
+        print(response.output_text)
         continue
 
 
@@ -151,33 +151,33 @@ while True:
         )
 
         prompt = f"""
-You are given a document.
+        You are given a document.
 
-Answer the user's question using
-only the information present
-in the document.
+        Answer the user's question using
+        only the information present
+        in the document.
 
-If the answer is not available,
-say:
-'I couldn't find that information
-in the document.'
+        If the answer is not available,
+        say:
+        'I couldn't find that information
+        in the document.'
 
-Document:
+        Document:
 
-{file_content}
+        {file_content}
 
-Question:
+        Question:
 
-{question}
-"""
+        {question}
+        """
 
 
 
-        response = client.chat.completions.create(
+        response = client.responses.create(
 
         model=os.getenv("MODEL"),
 
-        messages=[
+        input=[
 
         {
             "role":"system",
@@ -193,11 +193,8 @@ Question:
 
         )
 
-        print(response.choices[0].message.content)
+        print(response.output_text)
         continue
-
-
-    
 
     tool_result = execute_tool(user_input)
 
@@ -218,12 +215,12 @@ Question:
         print("\nAI  : Goodbye! Have a great day.")
         break
 
-    response = client.chat.completions.create(
+    response = client.responses.create(
         model=os.getenv("MODEL"),
-        messages=messages
+        input=messages
     )
 
-    ai_reply = response.choices[0].message.content
+    ai_reply = response.output_text
 
     print("\nAI :", ai_reply)
 
