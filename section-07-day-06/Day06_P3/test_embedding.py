@@ -1,27 +1,30 @@
+import os
+from dotenv import load_dotenv
 from openai import OpenAI
 
+load_dotenv()
+
+deployment_name = os.getenv("AZURE_EMBEDDING_DEPLOYMENT")
+endpoint = os.getenv("AZURE_EMBEDDING_ENDPOINT")
+api_key = os.getenv("AZURE_EMBEDDING_KEY")
+
 client = OpenAI(
-    base_url="http://localhost:11434/v1",
-    api_key="ollama"
+    base_url=endpoint,
+    api_key=api_key,
 )
 
-
 text1 = "Python is a programming language."
-
 text2 = "Python is used for software development."
 
 embedding1 = client.embeddings.create(
-    model="nomic-embed-text",
-    input=text1
+    model=deployment_name,
+    input=text1,
 ).data[0].embedding
 
 embedding2 = client.embeddings.create(
-    model="nomic-embed-text",
-    input=text2
+    model=deployment_name,
+    input=text2,
 ).data[0].embedding
 
-
-
-print(len(embedding1))
-print(len(embedding2))
-
+print(f"Embedding 1 dimensions: {len(embedding1)}")
+print(f"Embedding 2 dimensions: {len(embedding2)}")
