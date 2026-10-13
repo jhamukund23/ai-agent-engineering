@@ -4,7 +4,7 @@ def load_documents():
 
     documents = {}
 
-    folder = Path("knowledge")
+    folder = Path(__file__).resolve().parent / "knowledge"
 
     for file in folder.glob("*.txt"):
 
