@@ -12,6 +12,7 @@ from tools import (
 
 # Load configuration
 load_dotenv()
+
 # Create AI client
 client = OpenAI(
     base_url=os.getenv("BASE_URL"),
@@ -54,16 +55,16 @@ while True:
     Answer the user naturally.don't add anything from your side in the answer. if tool is none, then answer it from llm model.
     """
 
-    response = client.chat.completions.create(
+    response = client.responses.create(
     
             model=os.getenv("MODEL"),
     
-            messages=[
+            input=[
                 {
                 "role":"user",
                 "content":prompt
             }
                 ]
                 )
-    print("\nAI :", response.choices[0].message.content)
+    print("\nAI :", response.output_text)
 

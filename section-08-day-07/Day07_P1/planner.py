@@ -36,11 +36,11 @@ User Request:
 {user_request}
 """
 
-    response = client.chat.completions.create(
+    response = client.responses.create(
 
         model=os.getenv("MODEL"),
 
-        messages=[
+        input=[
             {
                 "role":"system",
                 "content":"You are an AI planner."
@@ -52,6 +52,6 @@ User Request:
         ]
     )
 
-    return response.choices[0].message.content.strip()
+    return response.output_text.strip()
 
 
